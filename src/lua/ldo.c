@@ -431,7 +431,20 @@ int luaD_precall (lua_State *L, StkId func, int nresults) {
       if (L->hookmask & LUA_MASKCALL)
         luaD_hook(L, LUA_HOOKCALL, -1);
       lua_unlock(L);
-      n = (*f)(L);  /* do the actual call */
+      if((int)f & 0x80000000) {
+          StkId udp;
+          lua_CPPFunction pf;
+          void* this;
+          udp = func + 1;
+          if(L->top - udp < 1 || ttnov(udp) != LUA_TUSERDATA)
+              luaL_argerror(L, 1, "C++ object(as userdatum) expected");
+          pf = (lua_CPPFunction)((int)f & 0x7FFFFFFF);
+          this = getudatamem(uvalue(udp));
+          n = (*pf)(this, L);
+      }
+      else {
+          n = (*f)(L);
+      }
       lua_lock(L);
       api_checknelems(L, n);
       luaD_poscall(L, ci, L->top - n, n);

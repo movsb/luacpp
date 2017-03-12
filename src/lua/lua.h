@@ -105,6 +105,11 @@ typedef LUA_KCONTEXT lua_KContext;
 typedef int (*lua_CFunction) (lua_State *L);
 
 /*
+** Type for C++ functions registered with Lua
+*/
+typedef int (__stdcall* lua_CPPFunction) (void* this_, lua_State* L);
+
+/*
 ** Type for continuation functions
 */
 typedef int (*lua_KFunction) (lua_State *L, int status, lua_KContext ctx);

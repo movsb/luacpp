@@ -120,8 +120,8 @@
     <ClCompile Include="..\src\lua\lzio.c">
       <Filter>Source Files\lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lua\lua.c">
-      <Filter>Source Files\lua</Filter>
+    <ClCompile Include="..\src\Source.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
